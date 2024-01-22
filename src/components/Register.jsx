@@ -4,13 +4,43 @@ import { Link } from 'react-router-dom';
 
 export default function Register() {
 
+    const initialState = {
+        name: '',
+        email: '',
+        country: '',
+        city: '',
+        phone: '',
+        date: '',
+        password: '',
+        passwordConfirmation: '',
+        sex: '',
+        privacy: ''
+    };
+
+    const [data, setData] = useState(initialState)
 
   
+    const handleChange = (e) => {
+        setData({ ...data, [e.target.id]: e.target.value })
+    }
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        fetch('http://localhost', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data),
+        }).then(res => {
+
+        });
+    };
 
     return (
         <>
-            <form action="" >
+            <form action="" onSubmit={handleSubmit} >
                 <div className='container'>
                     <div className='container_input'>
                         <label htmlFor='name'>Név</label>
