@@ -19,6 +19,8 @@ export default function Register() {
     const [data, setData] = useState(initialState)
     const [countries, setCountries] = useState([])
     const [cities, setCities] = useState([])
+    const [selectedCountryId, setSelectedCountryId] = useState('');
+
 
     useEffect(() => {
         fetch('https://backend.ichat.hu/api/countries')
@@ -30,13 +32,15 @@ export default function Register() {
     }, []);
 
     useEffect(() => {
-        fetch('https://backend.ichat.hu/api/countries/1/cities')
-            .then(res => res.json())
-            .then(data => {
-                console.log(data);
-                setCities(data);
-            })
-    }, [])
+        if (selectedCountryId) {
+            fetch(`https://backend.ichat.hu/api/countries/${selectedCountryId}/cities`)
+                .then(res => res.json())
+                .then(data => {
+                    setCities(data);
+                });
+        }
+    }, [selectedCountryId]);
+
 
 
     const handleChange = (e) => {
@@ -69,15 +73,17 @@ export default function Register() {
 
                     <div className='container_input'>
                         <label htmlFor='email'>E-mail</label>
-                        <input type='email' id='email' placeholder='E-mail címed' />
+                        <input type='email' id='email' placeholder='E-mail címed' onChange={handleChange}/>
                     </div>
 
                     <div className='container_input'>
                         <label htmlFor='country'>Lakhely (ország)</label>
                         <input list="countries" name='country' id='country' onChange={handleChange} />
                         <datalist id='countries'>
-                            {countries.map((country, index) => (
-                                <option key={index} value={country.name} />
+                        {countries.map(country => (
+                                <option key={country.id} value={country.name}>
+                                    {country.name}
+                                </option>
                             ))}
                         </datalist>
                     </div>
@@ -86,9 +92,7 @@ export default function Register() {
                         <label htmlFor='city'>Város</label>
                         <input list="cities" name='country' id='country' onChange={handleChange} />
                         <datalist id='cities'>
-                            {cities.map((city, index) => (
-                                <option key={index} value={city.name} />
-                            ))}
+                       
                         </datalist>
                     </div>
 
