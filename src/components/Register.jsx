@@ -1,9 +1,8 @@
-import React, { useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import '../components_css/Register.css';
 import { Link } from 'react-router-dom';
 
 export default function Register() {
-
     const initialState = {
         name: '',
         email: '',
@@ -18,8 +17,28 @@ export default function Register() {
     };
 
     const [data, setData] = useState(initialState)
+    const [countries, setCountries] = useState([])
+    const [cities, setCities] = useState([])
 
-  
+    useEffect(() => {
+        fetch('https://backend.ichat.hu/api/countries')
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                setCountries(data);
+            })
+    }, []);
+
+    useEffect(() => {
+        fetch('https://backend.ichat.hu/api/countries/1/cities')
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                setCities(data);
+            })
+    }, [])
+
+
     const handleChange = (e) => {
         setData({ ...data, [e.target.id]: e.target.value })
     }
@@ -38,13 +57,14 @@ export default function Register() {
         });
     };
 
+
     return (
         <>
-            <form action="" onSubmit={handleSubmit} >
+            <form action="" onSubmit={handleSubmit}>
                 <div className='container'>
                     <div className='container_input'>
                         <label htmlFor='name'>Név</label>
-                        <input type='text' id='name' placeholder='Hogy hínak?'  />
+                        <input type='text' id='name' placeholder='Hogy hínak?' onChange={handleChange} />
                     </div>
 
                     <div className='container_input'>
@@ -54,17 +74,21 @@ export default function Register() {
 
                     <div className='container_input'>
                         <label htmlFor='country'>Lakhely (ország)</label>
-                        <input list="countries" name='country' id='country' />
+                        <input list="countries" name='country' id='country' onChange={handleChange} />
                         <datalist id='countries'>
-                            
+                            {countries.map((country, index) => (
+                                <option key={index} value={country.name} />
+                            ))}
                         </datalist>
                     </div>
 
                     <div className='container_input'>
                         <label htmlFor='city'>Város</label>
-                        <input list="cities" name='country' id='country' />
+                        <input list="cities" name='country' id='country' onChange={handleChange} />
                         <datalist id='cities'>
-                          
+                            {cities.map((city, index) => (
+                                <option key={index} value={city.name} />
+                            ))}
                         </datalist>
                     </div>
 
@@ -116,7 +140,16 @@ export default function Register() {
                         <br />
                     </div>
 
-                    
+                    <div className='linkContainer'>
+                        <ul>
+                            <li>
+                                <Link to='/forgottenpass'>Elfelejtetted a jelszavad?</Link>
+                            </li>
+                            <li>
+                                <Link to='/alreadyreg'>Már regisztráltál?</Link>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </form>
         </>
