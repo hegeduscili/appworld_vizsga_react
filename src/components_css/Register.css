@@ -1,0 +1,90 @@
+.container {
+    background-color: white;
+    width: 800px;
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 5px;
+}
+
+.container_input {
+    flex: 0 0 50%;
+    padding: 20px;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    border: 1px solid lightgrey;
+}
+
+input:focus,
+select:focus {
+    outline: 1px solid rgb(111, 197, 226);
+    box-shadow: 0 3px 10px rgba(111, 197, 226, 0.4);
+}
+
+input[type="radio"] {
+    width: 30px;
+    margin-bottom: 0;
+    margin-left: -8px;
+    box-sizing: border-box;
+    border: 1px solid lightgrey;
+}
+
+
+input[type="checkbox"] {
+    width: 30px;
+    margin-bottom: 0;
+    margin-left: -8px;
+    box-sizing: border-box;
+    border: 1px solid lightgrey;
+}
+
+.buttonContainer,
+.linkContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: inherit;
+    margin-top: 10px;
+    margin-bottom: 25px;
+}
+
+button {
+    width: 750px;
+    height: 45px;
+    color: white;
+    background-color: rgb(43, 43, 255);
+    border: 1px solid rgb(43, 43, 255);
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+button:active{
+    transform: scale(0.98);
+}
+
+.linkContainer {
+    text-align: justify;
+}
+
+.linkContainer ul {
+    padding: 0;
+    margin: 0;
+    text-align: center;
+}
+
+.linkContainer ul li {
+    list-style: none;
+}
+
+
+.linkContainer a {
+    text-decoration: none;
+    color: rgb(43, 43, 255);
+}
