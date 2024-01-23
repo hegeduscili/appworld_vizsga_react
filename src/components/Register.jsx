@@ -20,6 +20,7 @@ export default function Register() {
     const [countries, setCountries] = useState([])
     const [cities, setCities] = useState([])
     const [selectedCountryId, setSelectedCountryId] = useState('');
+    const [isSelectedCountry, setIsSelectedCountry] = useState(false);
 
 
     useEffect(() => {
@@ -38,13 +39,19 @@ export default function Register() {
                 .then(data => {
                     setCities(data);
                 });
+            setIsSelectedCountry(true);
+        } else {
+            setCities([])
+            setIsSelectedCountry(false);
         }
+
     }, [selectedCountryId]);
 
 
 
     const handleChange = (e) => {
         if (e.target.id === 'country') {
+            setData({ ...data, country: e.target.value });
             const selectedCountry = countries.find(country => country.name === e.target.value);
             setSelectedCountryId(selectedCountry ? selectedCountry.id : '');
         } else {
@@ -87,7 +94,7 @@ export default function Register() {
                         <datalist id='countries'>
                             {countries.map(country => (
                                 <option key={country.id} value={country.name}>
-                                    {country.name}
+                                    {country.name} - {country.native}
                                 </option>
                             ))}
                         </datalist>
@@ -95,11 +102,13 @@ export default function Register() {
 
                     <div className='container_input'>
                         <label htmlFor='city'>Város</label>
-                        <input list="cities" name='city' id='city' onChange={handleChange} />
+                        <input list="cities" name='city' id='city' onChange={handleChange}
+                            placeholder={isSelectedCountry ? 'Kezdjen el gépelni' : 'Először válasszon országot'}
+                        />
                         <datalist id='cities'>
                             {cities.map(city => (
                                 <option key={city.id} value={city.name}>
-                                    {city.name}
+                                    {city.name} ({city.country_code})
                                 </option>
                             ))}
                         </datalist>
@@ -107,40 +116,40 @@ export default function Register() {
 
                     <div className='container_input'>
                         <label htmlFor='phone'>Telefonszám</label>
-                        <input type='number' id='phone' placeholder='Csak számjegyeket adj meg'  onChange={handleChange}/>
+                        <input type='number' id='phone' placeholder='Csak számjegyeket adj meg' onChange={handleChange} />
                     </div>
 
                     <div className='container_input'>
                         <label htmlFor='date'>Születési.dátum</label>
-                        <input type='date' id='date' placeholder='Jelszavad'  onChange={handleChange}/>
+                        <input type='date' id='date' placeholder='Jelszavad' onChange={handleChange} />
                     </div>
 
                     <div className='container_input'>
                         <label htmlFor='password'>Jelszó</label>
-                        <input type='password' id='password' placeholder='Jelszavad'  onChange={handleChange}/>
+                        <input type='password' id='password' placeholder='Jelszavad' onChange={handleChange} />
                     </div>
 
                     <div className='container_input'>
                         <label htmlFor='passwordConfirmation'>Jelszó ismét</label>
-                        <input type='password' id='passwordConfirmation' placeholder='Jelszavad ismét'  onChange={handleChange}/>
+                        <input type='password' id='passwordConfirmation' placeholder='Jelszavad ismét' onChange={handleChange} />
                     </div>
 
                     <div className='radio_check'>
                         <div className='container_input radio'>
                             <label htmlFor='sex'>Nemed:</label>
                             <br />
-                            <input type='radio' name='sex' id='man'  onChange={handleChange}/>
+                            <input type='radio' name='sex' id='man' onChange={handleChange} />
                             <label htmlFor='man'>Férfi</label>
                             <br />
-                            <input type='radio' name='sex' id='woman'  onChange={handleChange}/>
+                            <input type='radio' name='sex' id='woman' onChange={handleChange} />
                             <label htmlFor='woman'>Nő</label>
                             <br />
-                            <input type='radio' name='sex' id='other'  onChange={handleChange}/>
+                            <input type='radio' name='sex' id='other' onChange={handleChange} />
                             <label htmlFor='other'>Egyéb</label>
                             <br />
                         </div>
                         <div className='container_input checkbox'>
-                            <input type='checkbox' id='privacy'  onChange={handleChange}/>
+                            <input type='checkbox' id='privacy' onChange={handleChange} />
                             <label htmlFor='privacy' className='privacy'>
                                 A felhasználási feltételeket elfogadom
                             </label>
