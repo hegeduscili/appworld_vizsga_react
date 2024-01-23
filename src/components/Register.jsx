@@ -44,7 +44,12 @@ export default function Register() {
 
 
     const handleChange = (e) => {
-        setData({ ...data, [e.target.id]: e.target.value })
+        if (e.target.id === 'country') {
+            const selectedCountry = countries.find(country => country.name === e.target.value);
+            setSelectedCountryId(selectedCountry ? selectedCountry.id : '');
+        } else {
+            setData({ ...data, [e.target.id]: e.target.value });
+        }
     }
 
     const handleSubmit = (e) => {
@@ -73,14 +78,14 @@ export default function Register() {
 
                     <div className='container_input'>
                         <label htmlFor='email'>E-mail</label>
-                        <input type='email' id='email' placeholder='E-mail címed' onChange={handleChange}/>
+                        <input type='email' id='email' placeholder='E-mail címed' onChange={handleChange} />
                     </div>
 
                     <div className='container_input'>
                         <label htmlFor='country'>Lakhely (ország)</label>
                         <input list="countries" name='country' id='country' onChange={handleChange} />
                         <datalist id='countries'>
-                        {countries.map(country => (
+                            {countries.map(country => (
                                 <option key={country.id} value={country.name}>
                                     {country.name}
                                 </option>
@@ -90,48 +95,52 @@ export default function Register() {
 
                     <div className='container_input'>
                         <label htmlFor='city'>Város</label>
-                        <input list="cities" name='country' id='country' onChange={handleChange} />
+                        <input list="cities" name='city' id='city' onChange={handleChange} />
                         <datalist id='cities'>
-                       
+                            {cities.map(city => (
+                                <option key={city.id} value={city.name}>
+                                    {city.name}
+                                </option>
+                            ))}
                         </datalist>
                     </div>
 
                     <div className='container_input'>
                         <label htmlFor='phone'>Telefonszám</label>
-                        <input type='number' id='phone' placeholder='Csak számjegyeket adj meg' />
+                        <input type='number' id='phone' placeholder='Csak számjegyeket adj meg'  onChange={handleChange}/>
                     </div>
 
                     <div className='container_input'>
                         <label htmlFor='date'>Születési.dátum</label>
-                        <input type='date' id='date' placeholder='Jelszavad' />
+                        <input type='date' id='date' placeholder='Jelszavad'  onChange={handleChange}/>
                     </div>
 
                     <div className='container_input'>
                         <label htmlFor='password'>Jelszó</label>
-                        <input type='password' id='password' placeholder='Jelszavad' />
+                        <input type='password' id='password' placeholder='Jelszavad'  onChange={handleChange}/>
                     </div>
 
                     <div className='container_input'>
                         <label htmlFor='passwordConfirmation'>Jelszó ismét</label>
-                        <input type='password' id='passwordConfirmation' placeholder='Jelszavad ismét' />
+                        <input type='password' id='passwordConfirmation' placeholder='Jelszavad ismét'  onChange={handleChange}/>
                     </div>
 
                     <div className='radio_check'>
                         <div className='container_input radio'>
                             <label htmlFor='sex'>Nemed:</label>
                             <br />
-                            <input type='radio' name='sex' id='man' />
+                            <input type='radio' name='sex' id='man'  onChange={handleChange}/>
                             <label htmlFor='man'>Férfi</label>
                             <br />
-                            <input type='radio' name='sex' id='woman' />
+                            <input type='radio' name='sex' id='woman'  onChange={handleChange}/>
                             <label htmlFor='woman'>Nő</label>
                             <br />
-                            <input type='radio' name='sex' id='other' />
+                            <input type='radio' name='sex' id='other'  onChange={handleChange}/>
                             <label htmlFor='other'>Egyéb</label>
                             <br />
                         </div>
                         <div className='container_input checkbox'>
-                            <input type='checkbox' id='privacy' />
+                            <input type='checkbox' id='privacy'  onChange={handleChange}/>
                             <label htmlFor='privacy' className='privacy'>
                                 A felhasználási feltételeket elfogadom
                             </label>
