@@ -131,6 +131,7 @@ export default function Register() {
                     <div className='container_input'>
                         <label htmlFor='country'>Lakhely (ország)</label>
                         <select name='country' id='country' onChange={handleChange}>
+                            <option value=""></option>
                             {countries.map(country => (
                                 <option key={country.id} value={[country.name + ' - ' + country.native]}>
                                     {country.name} - {country.native}
