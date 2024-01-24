@@ -22,6 +22,8 @@ export default function Register() {
     const [selectedCountryId, setSelectedCountryId] = useState('');
     const [isSelectedCountry, setIsSelectedCountry] = useState(false);
 
+    //A kommentelt résznél az országok és a városok id-ja kerül letárolásra,viszont így nem felhasználó barát a megjelenés.
+
 
     useEffect(() => {
         fetch('https://backend.ichat.hu/api/countries')
@@ -49,11 +51,23 @@ export default function Register() {
 
 
 
+    /*     const handleChange = (e) => {
+            if (e.target.id === 'country') {
+                setData({ ...data, country: e.target.value });
+                const selectedCountry = countries.find(country => country.id === parseInt(e.target.value));
+                setSelectedCountryId(selectedCountry ? selectedCountry.id : '');
+                console.log(selectedCountry)
+            } else {
+                setData({ ...data, [e.target.id]: e.target.value });
+            }
+        } */
+
     const handleChange = (e) => {
         if (e.target.id === 'country') {
             setData({ ...data, country: e.target.value });
-            const selectedCountry = countries.find(country => country.name === e.target.value);
+            const selectedCountry = countries.find(country => (country.name + ' - ' + country.native) === e.target.value);
             setSelectedCountryId(selectedCountry ? selectedCountry.id : '');
+            console.log(selectedCountry)
         } else {
             setData({ ...data, [e.target.id]: e.target.value });
         }
@@ -88,12 +102,12 @@ export default function Register() {
                         <input type='email' id='email' placeholder='E-mail címed' onChange={handleChange} />
                     </div>
 
-                    <div className='container_input'>
+                    {/*  <div className='container_input'>
                         <label htmlFor='country'>Lakhely (ország)</label>
                         <input list="countries" name='country' id='country' onChange={handleChange} />
                         <datalist id='countries'>
                             {countries.map(country => (
-                                <option key={country.id} value={country.name}>
+                                <option key={country.id} value={country.id.toString()}>
                                     {country.name} - {country.native}
                                 </option>
                             ))}
@@ -107,7 +121,33 @@ export default function Register() {
                         />
                         <datalist id='cities'>
                             {cities.map(city => (
-                                <option key={city.id} value={city.name}>
+                                <option key={city.id} value={city.id}>
+                                    {city.name} ({city.country_code})
+                                </option>
+                            ))}
+                        </datalist>
+                    </div> */}
+
+                    <div className='container_input'>
+                        <label htmlFor='country'>Lakhely (ország)</label>
+                        <input list="countries" name='country' id='country' onChange={handleChange} />
+                        <datalist id='countries'>
+                            {countries.map(country => (
+                                <option key={country.id} value={[country.name + ' - ' + country.native]}>
+                                    {country.name} - {country.native}
+                                </option>
+                            ))}
+                        </datalist>
+                    </div>
+
+                    <div className='container_input'>
+                        <label htmlFor='city'>Város</label>
+                        <input list="cities" name='city' id='city' onChange={handleChange}
+                            placeholder={isSelectedCountry ? 'Kezdjen el gépelni' : 'Először válasszon országot'}
+                        />
+                        <datalist id='cities'>
+                            {cities.map(city => (
+                                <option key={city.id} value={[city.name + ' '+ '(' +city.country_code +')']}>
                                     {city.name} ({city.country_code})
                                 </option>
                             ))}
