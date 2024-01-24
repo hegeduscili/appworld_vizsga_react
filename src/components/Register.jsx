@@ -130,14 +130,13 @@ export default function Register() {
 
                     <div className='container_input'>
                         <label htmlFor='country'>Lakhely (ország)</label>
-                        <input list="countries" name='country' id='country' onChange={handleChange} />
-                        <datalist id='countries'>
+                        <select name='country' id='country' onChange={handleChange}>
                             {countries.map(country => (
                                 <option key={country.id} value={[country.name + ' - ' + country.native]}>
                                     {country.name} - {country.native}
                                 </option>
                             ))}
-                        </datalist>
+                        </select>
                     </div>
 
                     <div className='container_input'>
